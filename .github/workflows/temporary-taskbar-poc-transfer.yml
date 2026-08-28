@@ -1,0 +1,32 @@
+name: Temporary Taskbar POC Transfer
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download package
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 'https://tmpfiles.org/dl/wjwJBXHt5dsN/ankitaskbargenerationpoc.zip' -o AnkiTaskbarGenerationPOC.zip
+          echo '8F991C34B1B8A5910181C94C283D9D48BB96450740262898217571C1E01B206A  AnkiTaskbarGenerationPOC.zip' | sha256sum -c -
+          unzip -t AnkiTaskbarGenerationPOC.zip
+      - name: Publish base64 transfer file
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 -w0 AnkiTaskbarGenerationPOC.zip > AnkiTaskbarGenerationPOC.zip.b64
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add AnkiTaskbarGenerationPOC.zip.b64
+          git commit -m 'Temporary POC transfer payload [skip ci]'
+          git push
