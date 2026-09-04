@@ -20,7 +20,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p transfer
-          curl -fL 'https://tmpfiles.org/dl/wewzhgksLwsZ/ankioriginalaumidpoc.zip' -o transfer/AnkiOriginalAumidPOC.zip
+          curl -fL --retry 3 --retry-delay 2 'https://correct-casting-tremendous-requires.trycloudflare.com/AnkiOriginalAumidPOC.zip' -o transfer/AnkiOriginalAumidPOC.zip
           echo '875c46df992a7bbea879c390e9dfed4a08a9b801ca0a57873db11c5c68427db9  transfer/AnkiOriginalAumidPOC.zip' | sha256sum -c -
           unzip -t transfer/AnkiOriginalAumidPOC.zip
 
