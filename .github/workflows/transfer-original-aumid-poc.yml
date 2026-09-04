@@ -1,4 +1,4 @@
-name: Transfer Original Anki AUMID POC
+name: Export Original Anki AUMID POC
 
 on:
   push:
@@ -7,31 +7,25 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  transfer:
+  export:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download and verify POC
+      - name: Verify committed POC
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p transfer
-          curl -fL --retry 3 --retry-delay 2 'https://correct-casting-tremendous-requires.trycloudflare.com/AnkiOriginalAumidPOC.zip' -o transfer/AnkiOriginalAumidPOC.zip
+          FILE='transfer/AnkiOriginalAumidPOC.zip'
           echo '875c46df992a7bbea879c390e9dfed4a08a9b801ca0a57873db11c5c68427db9  transfer/AnkiOriginalAumidPOC.zip' | sha256sum -c -
-          unzip -t transfer/AnkiOriginalAumidPOC.zip
+          unzip -t "$FILE"
 
-      - name: Commit transferred ZIP
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add transfer/AnkiOriginalAumidPOC.zip
-          if ! git diff --cached --quiet; then
-            git commit -m 'Temporary transfer of Original AUMID POC [skip ci]'
-            git push origin HEAD:main
-          fi
+      - name: Upload POC artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AnkiOriginalAumidPOC
+          path: transfer/AnkiOriginalAumidPOC.zip
+          retention-days: 1
