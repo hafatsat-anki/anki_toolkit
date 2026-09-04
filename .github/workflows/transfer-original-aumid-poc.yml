@@ -20,8 +20,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p transfer
-          curl -fL 'https://tmpfiles.org/dl/wqwYhxhd8Lzx/ankioriginalaumidpoc.zip' -o transfer/AnkiOriginalAumidPOC.zip
-          echo '9E6A24A533D7038DB2F7520C6DBB241F5F4163C2EEF1517F62420684EFE3A85E  transfer/AnkiOriginalAumidPOC.zip' | sha256sum -c -
+          curl -fL 'https://tmpfiles.org/dl/wewzhgksLwsZ/ankioriginalaumidpoc.zip' -o transfer/AnkiOriginalAumidPOC.zip
+          echo '875c46df992a7bbea879c390e9dfed4a08a9b801ca0a57873db11c5c68427db9  transfer/AnkiOriginalAumidPOC.zip' | sha256sum -c -
           unzip -t transfer/AnkiOriginalAumidPOC.zip
 
       - name: Commit transferred ZIP
