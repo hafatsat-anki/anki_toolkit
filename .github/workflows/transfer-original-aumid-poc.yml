@@ -1,4 +1,4 @@
-name: Transfer Original AUMID POC
+name: Transfer Original Anki AUMID POC
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
           set -euo pipefail
           mkdir -p transfer
           curl -fL 'https://tmpfiles.org/dl/wqwYhxhd8Lzx/ankioriginalaumidpoc.zip' -o transfer/AnkiOriginalAumidPOC.zip
-          echo '0C1483FB81FC562C3A2E94DF438F93B5CA9819AD90972FCC218BAA45DC0F51FB  transfer/AnkiOriginalAumidPOC.zip' | sha256sum -c -
+          echo '9E6A24A533D7038DB2F7520C6DBB241F5F4163C2EEF1517F62420684EFE3A85E  transfer/AnkiOriginalAumidPOC.zip' | sha256sum -c -
           unzip -t transfer/AnkiOriginalAumidPOC.zip
 
       - name: Commit transferred ZIP
